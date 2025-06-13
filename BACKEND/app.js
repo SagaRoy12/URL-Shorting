@@ -2,30 +2,15 @@ import express from 'express'
 const app = express()
 const port = 3000 
 import dotenv from 'dotenv'
-import ShortUrl from './src/config/dbSchema/short.url.schema.js'
+import ShortUrl from './src/dbSchema/short.url.schema.js'
 dotenv.config("./.env") // Load environment variables from .env file
-import { nanoid } from 'nanoid' 
-import connectDB from './src/config/mongo.config.js' // Importing the MongoDB connection function
 
+import connectDB from './src/config/mongo.config.js' // Importing the MongoDB connection function
+import short_urlRoute from './src/routes/shortUrl_Routes.js' // Importing the short URL routes
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) // for parsing th URL-encoded data
 
-app.post("/api/create" ,(req, res)=>{
-    const {url} = req.body // Extracting the URL from the request body
-    const generatedShortUrl = nanoid(7) // Generating a unique short URL using nanoid
-    const newShortUrl = new ShortUrl({  // instance to be saved in databse
-        full_url: url, // Full URL to be shortened
-        short_url: generatedShortUrl, // Generating a unique short URL using nanoid
-        clicks: 0 // Initializing clicks to 0
-    })
-    newShortUrl.save()
-    //console.log(newShortUrl);
-    res.send({
-        success: true,
-        message: "Short URL created successfully",
-        data: newShortUrl // Sending the newly created short URL data in the response
-    })
-})
+app.use("/api/create" , short_urlRoute);
 
 app.get("/:shortenedUrl", async (req, res) => {
     const {shortenedUrl} = req.params // Extracting the shortened URL from the request parameters
@@ -51,7 +36,10 @@ app.get("/:shortenedUrl", async (req, res) => {
     }
 })
 
-app.listen(port , ()=>{
-    connectDB() // Connect to MongoDB
-    console.log(`server is runnig on port http://localhost:${port}`);
-})
+connectDB().then(() => {
+    app.listen(port, () => {
+        console.log(`Server is running at http://localhost:${port}`);
+    });
+}).catch((err) => {
+    console.error("Failed to connect to MongoDB", err);
+});
