@@ -2,6 +2,7 @@ import express from 'express'
 const app = express()
 const port = 3000 
 import dotenv from 'dotenv'
+import { redirectFromShortUrl } from './src/controller/shortUrl_Controller.js' 
 import ShortUrl from './src/dbSchema/short.url.schema.js'
 dotenv.config("./.env") // Load environment variables from .env file
 
@@ -12,29 +13,7 @@ app.use(express.urlencoded({ extended: true })) // for parsing th URL-encoded da
 
 app.use("/api/create" , short_urlRoute);
 
-app.get("/:shortenedUrl", async (req, res) => {
-    const {shortenedUrl} = req.params // Extracting the shortened URL from the request parameters
-    try {
-        const shortUrlData = await ShortUrl.findOne({ short_url: shortenedUrl }) // Finding the short URL in the database
-        if (!shortUrlData) {
-            return res.status(404).send({
-                success: false,
-                message: "Short URL not found"
-            })
-        }
-        else{
-        shortUrlData.clicks += 1 // Incrementing the click count
-        await shortUrlData.save() // Saving the updated click count to the database
-        res.redirect(shortUrlData.full_url) // Redirecting to the full URL just by entering the short url 
-        }
-    } catch (error) {
-        console.error(error)
-        res.status(500).send({
-            success: false,
-            message: "Internal server error"
-        })
-    }
-})
+app.get("/:shortenedUrl", redirectFromShortUrl) 
 
 connectDB().then(() => {
     app.listen(port, () => {

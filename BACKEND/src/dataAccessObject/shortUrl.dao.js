@@ -12,3 +12,7 @@ export const shortUrlSaver = async (generatedShortUrl , longUrl , userId)=>{
     }
     newShortUrl.save()
 }
+
+export const findUrlFromShortUrl = async(shortUrl)=>{
+    return await ShortUrl.findOne({ short_url : shortUrl}) 
+}
