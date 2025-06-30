@@ -12,5 +12,5 @@ export const createShortUrl = async (req, res)=>{
 export const redirectFromShortUrl = async (req, res)=>{
    const {shortUrl} = req.params // Extracting the short URL from the request parameters
    const url = await findUrlFromShortUrl(shortUrl) // Function to find the original URL from the short URL
-    res.redirect (url)
+    res.redirect (url.full_url)
 }
