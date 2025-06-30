@@ -8,11 +8,11 @@ export const shortUrlSaver = async (generatedShortUrl , longUrl , userId)=>{
         clicks: 0 // Initializing clicks to 0
     })
     if (userId) {
-        newShortUrl.userId = userId // If a user ID is provided, associate it with the short URL
+        newShortUrl.user = userId // If a user ID is provided, associate it with the short URL
     }
     newShortUrl.save()
 }
 
 export const findUrlFromShortUrl = async(shortUrl)=>{
-    return await ShortUrl.findOne({ short_url : shortUrl}) 
+    return await ShortUrl.findOneAndUpdate({ short_url : shortUrl}, {$inc:{clicks: 1}}) // Incrementing the click count for the short URL
 }
