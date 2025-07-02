@@ -1,21 +1,40 @@
-import {createShortUrlWithOutUserService} from "../services/shortUrl_Generate_Service.js"
+import {createShortUrlWithUserService,createShortUrlWithOutUserService} from "../services/shortUrl_Generate_Service.js"
 import {findUrlFromShortUrl} from "../dataAccessObject/shortUrl.dao.js"
-import ShortUrl from "../dbSchema/short.url.schema.js"
+import tryCatchWrapperForErrorHandeling from "../utility/tryCatchWrapper.js"
 
-export const createShortUrl = async (req, res, next)=>{
-   try{
+
+export const createShortUrlWithoutUser = tryCatchWrapperForErrorHandeling(async (req, res)=>{
+
     const {url} = req.body // Extracting the URL from the request body
-   const shortUrl = await createShortUrlWithOutUserService(url)
-   res.send(process.env.APP_URL+shortUrl.short_url) // Sending the full URL with the short URL appended
- }
-catch(err){
-    next(err)
- }
-}
+    if (!url) {
+        throw new Error("URL is required");
+    }
+    const shortUrl = await createShortUrlWithOutUserService(url) // Creating a short URL without associating it with a user
+ 
+    res.send(process.env.APP_URL+shortUrl.short_url) // Sending the full URL with the short URL appended
+ 
+})
+
+export const createShortUrlWithUser = tryCatchWrapperForErrorHandeling(async (req, res) => {
+     
+      const {url} = req.body
+     
+       const userId = req.user?.id || "test-user-id" // Mock user ID for testing
+       
+       if (!url) {
+           throw new Error("URL is required");
+       }
+       
+       const shortUrl = await createShortUrlWithUserService(url, userId)
+      
+       res.send(process.env.APP_URL + shortUrl.short_url)
+  
+})
+
 
 // previous function has generated a ashort url annd now from that showt url we find and redirect
-export const redirectFromShortUrl = async (req, res, next) => {
-   try {
+export const redirectFromShortUrl = tryCatchWrapperForErrorHandeling(async (req, res) => {
+   
        // Extracting the short URL from the request parameters
        const shortenedUrl = req.params.shortenedUrl;
        
@@ -29,7 +48,5 @@ export const redirectFromShortUrl = async (req, res, next) => {
        
        // Now it's safe to access url.full_url
        return res.redirect(url.full_url);
-   } catch (err) {
-       next(err);
-   }
-}
+   
+})
