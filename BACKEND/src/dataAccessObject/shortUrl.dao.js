@@ -10,7 +10,7 @@ export const shortUrlSaver = async (generatedShortUrl , longUrl , userId)=>{
     if (userId) {
         newShortUrl.user = userId // If a user ID is provided, associate it with the short URL
     }
-    newShortUrl.save()
+   return await newShortUrl.save()  // return the saved document
 }
 
 export const findUrlFromShortUrl = async(shortUrl)=>{
