@@ -16,6 +16,7 @@ app.use("/api/create" , short_urlRoute);
 app.get("/:shortenedUrl", redirectFromShortUrl) 
 
 app.use(errorHandeler)
+
 connectDB().then(() => {
     app.listen(port, () => {
         console.log(`Server is running at http://localhost:${port}`);
