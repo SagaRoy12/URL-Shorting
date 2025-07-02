@@ -1,10 +1,10 @@
 import express from  "express"
 const router = express.Router()
-import {createShortUrl} from '../controller/shortUrl_Controller.js' 
+import {createShortUrlWithoutUser , createShortUrlWithUser} from '../controller/shortUrl_Controller.js' 
 
 
-router.post(`/`, createShortUrl )
+router.post(`/`, createShortUrlWithoutUser )
 
-
+router.post(`/with-user`, createShortUrlWithUser)
 
 export default router
