@@ -8,7 +8,12 @@ dotenv.config("./.env") // Load environment variables from .env file
 import {errorHandeler} from './src/utility/errorHandeler.js'
 import connectDB from './src/config/mongo.config.js' // Importing the MongoDB connection function
 import short_urlRoute from './src/routes/shortUrl_Routes.js' // Importing the short URL routes
+import cors from 'cors'
+
+app.use(cors())
+
 app.use(express.json())
+
 app.use(express.urlencoded({ extended: true })) // for parsing th URL-encoded data
 
 app.use("/api/create" , short_urlRoute);
