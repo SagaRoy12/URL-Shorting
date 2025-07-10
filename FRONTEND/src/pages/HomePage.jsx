@@ -13,9 +13,9 @@ const HomePage = ()=> {
             <UrlForm/>
           </div>
           
-          <div className="bg-gray-50 px-8 py-4 border-t border-gray-200">
+          <div className="bg-gray-50 px-8 py-4 border-t border-gray-300">
             <p className="text-xs text-center text-gray-600">
-              Create short links that can be easily shared, tweeted, or emailed to friends.
+              Create short links that can be easily shared, tweeted, or emailed to friends and family.
             </p>
           </div>
         </div>
