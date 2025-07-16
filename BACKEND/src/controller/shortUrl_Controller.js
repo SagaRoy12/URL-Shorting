@@ -11,7 +11,7 @@ export const createShortUrlWithoutUser = tryCatchWrapperForErrorHandeling(async 
     }
     const shortUrl = await createShortUrlWithOutUserService(url) // Creating a short URL without associating it with a user
  
-    res.send(process.env.APP_URL+shortUrl.short_url) // Sending the full URL with the short URL appended
+    res.status(200).json({shortUrl:process.env.APP_URL+shortUrl.short_url}) // Sending the full URL with the short URL appended
  
 })
 
