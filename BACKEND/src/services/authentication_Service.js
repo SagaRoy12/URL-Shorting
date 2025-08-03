@@ -4,6 +4,8 @@ import {createUser} from "../dataAccessObject/userCreate.dao.js"
 import {findUserByEmail , findUserById} from "../dataAccessObject/userSearch.dao.js"
 import {signedJsonWebToken} from "../jwt/jsonWebTokenSign.jwt.js"
 
+
+// registering the user
 export const registerUserService = async (name , email , password)=>{
     const user = await findUserByEmail(email)
     if(user){
