@@ -2,5 +2,5 @@ export const cookieOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV ==="production",
     sameSite: "lax",
-    maxAge: 1000 * 60 * 5 // for 5 minutes
+    maxAge: 5* 60 * 1000 // for 5 minutes
 }
