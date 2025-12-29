@@ -15,3 +15,13 @@ export const registerUserService = async (name , email , password)=>{
     const token = await signedJsonWebToken({id:newUser._id})
     return token
 }
+
+// login the user
+export const loginUserService = async(email , password)=>{
+    const user = await findUserByEmail(email);
+    if(!user || user.password!==password){
+        throw new Error ("invalid Username or Password ❌")
+    }
+    const token = await signedJsonWebToken({id:user._id})
+    return token;
+}
