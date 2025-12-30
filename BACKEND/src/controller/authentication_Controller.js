@@ -20,7 +20,7 @@ export const registerUser =tryCatchWrapperForErrorHandeling( async (req, res)=>{
 export const loginUser = tryCatchWrapperForErrorHandeling(async (req, res)=>{
     const {email, password} = req.body
 
-    const token = await loginUserService(email, password)
+    const {token , user}= await loginUserService(email, password)
 
     res.cookie("ACCES_TOKEN", token, cookieOptions)
 
