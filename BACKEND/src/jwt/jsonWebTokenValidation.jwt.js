@@ -1,5 +1,7 @@
 import jsonwebtoken from 'jsonwebtoken'
 
 export const verifyJsonWebToken = async (token )=>{
-    return await jsonwebtoken.verify(token , process.env.JWT_SECRET )
+   const decodedToken =  await jsonwebtoken.verify(token , process.env.JWT_SECRET )
+   console.log(decodedToken.id)
+   return decodedToken.id
 }

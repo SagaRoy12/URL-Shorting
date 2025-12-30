@@ -23,5 +23,5 @@ export const loginUserService = async(email , password)=>{
         throw new Error ("invalid Username or Password ❌")
     }
     const token = await signedJsonWebToken({id:user._id})
-    return token;
+    return {token , user};
 }

@@ -1,8 +1,7 @@
-import {cookieOptions} from"../config/cookieOptions.config.js"
 import jsonwebtoken from 'jsonwebtoken'
 
 const jwtOptions = {
-    expiresIn: cookieOptions.maxAge
+    expiresIn: '1h' // 1 hour
 }
 
 export const signedJsonWebToken = async (payload )=>{

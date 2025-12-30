@@ -3,22 +3,35 @@ import ShortUrl from "../dbSchema/short.url.schema.js" // Importing the short UR
 // shortUrl dao helps to save the short url and long url in database    
 
 export const shortUrlSaver = async (generatedShortUrl , longUrl , userId)=>{
-    
-    const newShortUrl = new ShortUrl({  // instance to be saved in databse
-    
-        full_url: longUrl, // Full URL to be shortened
-      
-        short_url: generatedShortUrl, // Generating a unique short URL using nanoid
-      
-        clicks: 0 // Initializing clicks to 0
-        
+   // console.log('DAO received userId:', userId); // Add this
+    const newShortUrl = new ShortUrl({
+        full_url: longUrl,
+        short_url: generatedShortUrl,
+        clicks: 0
     })
     if (userId) {
-        newShortUrl.user = userId // If a user ID is provided, associate it with the short URL
+       // console.log('Setting user field to:', userId); // Add this
+        newShortUrl.user = userId
+    } else {
+       // console.log('userId is falsy, not setting user field'); // Add this
     }
-   return await newShortUrl.save()  // return the saved document
+   return await newShortUrl.save()
 }
 
 export const findUrlFromShortUrl = async(shortUrl)=>{
-    return await ShortUrl.findOneAndUpdate({ short_url : shortUrl}, {$inc:{clicks: 1}}) // Incrementing the click count for the short URL
+    const result = await ShortUrl.findOneAndUpdate({ short_url : shortUrl}, {$inc:{clicks: 1}});
+    return result;
+}
+
+export const findCustomShortUrl= async(slug) =>{
+    return await ShortUrl.findOne({ short_url: slug})
+    
+}
+
+export const findUrlByFullUrl = async(fullUrl, userId = null) => {
+    const query = { full_url: fullUrl };
+    if (userId) {
+        query.user = userId;
+    }
+    return await ShortUrl.findOne(query);
 }

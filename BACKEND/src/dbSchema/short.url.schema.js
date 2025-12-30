@@ -22,5 +22,7 @@ const shortUrlSchema = new mongoose.Schema({
    
 });
 
+shortUrlSchema.index({ full_url: 1, user: 1 }, { unique: true });  // unique index for full_url and user
+
 const ShortUrl = mongoose.model('ShortUrl', shortUrlSchema);
 export default ShortUrl;
