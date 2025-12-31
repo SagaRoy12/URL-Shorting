@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { frontendUserLoginApi } from '../APIs/userApiFrontend';
 
-const LoginForm = () => {
+const LoginForm = ({ onSwitchToRegister }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -167,13 +167,13 @@ const LoginForm = () => {
                         </button>
                     </form>
 
-                  {/* Divider */}
+                    {/* Divider */}
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center">
                             <div className="w-full border-t border-white/20"></div>
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span className="px-2 bg-transparent text-white/70">Or continue with</span>
+                            <span className="cursor-pointer px-2 bg-transparent text-white/70">Or continue with</span>
                         </div>
                     </div>
 
@@ -181,16 +181,16 @@ const LoginForm = () => {
 
                     {/* Sign up link */}
                     <div className="text-center">
-                        <p className="text-sm text-white/70">
+                        <p className="cursor-pointer text-sm text-white/70">
                             Don't have an account?{' '}
-                            <a href="#" className="text-white font-semibold hover:underline transition-all">
+                            <button onClick={onSwitchToRegister} className="text-white font-semibold hover:underline transition-all">
                                 Sign up
-                            </a>
+                            </button>
                         </p>
-                    </div>*/
+                    </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
