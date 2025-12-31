@@ -2,6 +2,8 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000",
+  timeout: 10000,
+  withCredentials: true,
 });
 
 // Response interceptor for error handling
@@ -14,7 +16,7 @@ axiosInstance.interceptors.response.use(
       // Server responded with error status
       const { status, data } = error.response;
       console.error(`API Error ${status}:`, data.message || 'Unknown error');
-      
+
       switch (status) {
         case 400:
           console.error('Bad Request');
@@ -41,7 +43,7 @@ axiosInstance.interceptors.response.use(
       // Request setup error
       console.error('Request Error:', error.message);
     }
-    
+
     return Promise.reject(error);
   }
 );
