@@ -1,28 +1,27 @@
-// authentication_Controller.js
-
-import {registerUserService, loginUserService} from "../services/authentication_Service.js"
+import { registerUserService, loginUserService } from "../services/authentication_Service.js"
 import tryCatchWrapperForErrorHandeling from "../utility/tryCatchWrapper.js"
-import {cookieOptions} from "../config/cookieOptions.config.js"
+import { cookieOptions } from "../config/cookieOptions.config.js"
 
-export const registerUser =tryCatchWrapperForErrorHandeling( async (req, res)=>{
+export const registerUser = tryCatchWrapperForErrorHandeling(async (req, res) => {
 
-    const{name , email, password} = req.body
+    const { name, email, password } = req.body
 
-    const token = await registerUserService(name , email , password)
+    const {token , user} = await registerUserService(name, email, password)
 
     //console.log(token)
+    req.user = user
+    res.cookie("ACCES_TOKEN", token, cookieOptions)  // saving the cookie with the token and options
 
-    res.cookie("ACCES_TOKEN", token , cookieOptions)  // saving the cookie with the token and options
-
-    res.status(200).json({message:"user registered"})
+    res.status(200).json({ message: "user registered" })
 })
 
-export const loginUser = tryCatchWrapperForErrorHandeling(async (req, res)=>{
-    const {email, password} = req.body
+export const loginUser = tryCatchWrapperForErrorHandeling(async (req, res) => {
+    const { email, password } = req.body
 
-    const {token , user}= await loginUserService(email, password)
+    const { token, user } = await loginUserService(email, password)
 
+    req.user = user
     res.cookie("ACCES_TOKEN", token, cookieOptions)
 
-    res.status(200).json({message:"user logged in"})
+    res.status(200).json({ user: user, message: "user logged in" })
 })
