@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { frontendUserLoginApi } from '../APIs/userApiFrontend';
-
+import { useSelector } from 'react-redux';
+import { login } from '../reduxStore/slice/authSlice';
+import { useDispatch } from 'react-redux';
 const LoginForm = ({ onSwitchToRegister }) => {
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -9,6 +12,9 @@ const LoginForm = ({ onSwitchToRegister }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const auth = useSelector((state) => state.auth);
+    console.log(auth);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -40,8 +46,8 @@ const LoginForm = ({ onSwitchToRegister }) => {
         try {
             const response = await frontendUserLoginApi(formData.email, formData.password);
             console.log('Login successful:', response);
-            // Handle successful login (e.g., redirect, store token, etc.)
-            // You can add your success logic here
+            dispatch(login(response.user))
+
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed. Please try again.');
             console.error('Login error:', err);
