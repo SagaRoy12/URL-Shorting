@@ -1,12 +1,15 @@
 import HomePage from './pages/HomePage.jsx'
 import AuthPage from './pages/AuthPage.jsx'
-const App = () => {
+
+import { Outlet } from "@tanstack/react-router";
+
+const RootLayout = () => {
   return (
     <>
-      <AuthPage />
+      <Outlet />
 
     </>
   )
 }
 
-export default App
+export default RootLayout
