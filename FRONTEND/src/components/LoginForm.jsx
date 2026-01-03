@@ -1,9 +1,17 @@
 import { useState } from 'react';
 import { frontendUserLoginApi } from '../APIs/userApiFrontend';
 import { useSelector } from 'react-redux';
-import { login } from '../reduxStore/slice/authSlice';
+import { login } from '../reduxStore/slice/authSlice.js';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from '@tanstack/react-router'
+
+
+
+
+
+
 const LoginForm = ({ onSwitchToRegister }) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         email: '',
@@ -43,14 +51,18 @@ const LoginForm = ({ onSwitchToRegister }) => {
 
         setIsLoading(true);
 
-        try {
+          try {
             const response = await frontendUserLoginApi(formData.email, formData.password);
             console.log('Login successful:', response);
-            dispatch(login(response.user))
+
+            dispatch(login(response.user)) // 
+
+            navigate({ to: `/dashboard` }) // navigating to dashboard after login
 
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed. Please try again.');
             console.error('Login error:', err);
+
         } finally {
             setIsLoading(false);
         }

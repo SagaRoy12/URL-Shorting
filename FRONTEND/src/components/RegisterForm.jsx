@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { frontendUserRegisterApi } from '../APIs/userApiFrontend';
+import { useNavigate } from '@tanstack/react-router'
+
 
 const RegisterForm = ({ onSwitchToLogin }) => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -49,6 +52,7 @@ const RegisterForm = ({ onSwitchToLogin }) => {
             // Handle successful registration (e.g., show success message, switch to login)
             if (onSwitchToLogin) {
                 onSwitchToLogin();
+                navigate({ to: `/dashboard` }) // navigating to dashboard after login
             }
         } catch (err) {
             setError(err.response?.data?.message || 'Registration failed. Please try again.');
