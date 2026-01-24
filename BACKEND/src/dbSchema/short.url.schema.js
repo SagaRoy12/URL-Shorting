@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
+import User from "./user.schema.js";
 const shortUrlSchema = new mongoose.Schema({
     full_url: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     short_url: {
         type: String,
@@ -19,7 +21,7 @@ const shortUrlSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User' // taking reference from User model
     }
-   
+
 });
 
 shortUrlSchema.index({ full_url: 1, user: 1 }, { unique: true });  // unique index for full_url and user

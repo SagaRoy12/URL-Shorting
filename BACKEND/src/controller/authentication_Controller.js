@@ -6,9 +6,7 @@ export const registerUser = tryCatchWrapperForErrorHandeling(async (req, res) =>
 
     const { name, email, password } = req.body
 
-    const {token , user} = await registerUserService(name, email, password)
-
-    //console.log(token)
+    const { token, user } = await registerUserService(name, email, password)
     req.user = user
     res.cookie("ACCES_TOKEN", token, cookieOptions)  // saving the cookie with the token and options
 
@@ -18,10 +16,19 @@ export const registerUser = tryCatchWrapperForErrorHandeling(async (req, res) =>
 export const loginUser = tryCatchWrapperForErrorHandeling(async (req, res) => {
     const { email, password } = req.body
 
-    const { token, user } = await loginUserService(email, password) 
+    const { token, user } = await loginUserService(email, password)
 
     req.user = user
     res.cookie("ACCES_TOKEN", token, cookieOptions)
 
     res.status(200).json({ user: user, message: "user logged in" })
+})
+
+export const getCurrentUser = tryCatchWrapperForErrorHandeling(async (req, res) => {
+    res.status(200).json({ user: req.user })
+})
+
+export const logoutUser = tryCatchWrapperForErrorHandeling(async (req, res) => {
+    res.clearCookie("ACCES_TOKEN", cookieOptions); // Clear the cookie with the same options
+    res.status(200).json({ message: "user logged out" })
 })

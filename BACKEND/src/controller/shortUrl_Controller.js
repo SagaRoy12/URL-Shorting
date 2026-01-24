@@ -2,7 +2,7 @@
 import { createShortUrlWithUserService, createShortUrlWithOutUserService } from "../services/shortUrl_Generate_Service.js"
 import { findUrlFromShortUrl } from "../dataAccessObject/shortUrl.dao.js"
 import tryCatchWrapperForErrorHandeling from "../utility/tryCatchWrapper.js"
-import { findUserById } from "../dataAccessObject/userSearch.dao.js";
+// import { findUserById } from "../dataAccessObject/userSearch.dao.js";
 
 export const createShortUrlWithoutUser = tryCatchWrapperForErrorHandeling(async (req, res) => {
 
@@ -19,17 +19,21 @@ export const createShortUrlWithoutUser = tryCatchWrapperForErrorHandeling(async 
 export const createShortUrlWithUser = tryCatchWrapperForErrorHandeling(async (req, res) => {
 
     const { url, slug } = req.body
+    if (!req.user || !req.user._id) {
+        throw new Error("User not authenticated");
+    }
 
-    const userId = req.user?._id || "test-user-id" // Mock user ID for testing
-    console.log(`userId: ${userId}`);
+    const userId = req.user._id;
+
+    //console.log(`userId FOR TESTING ✌️: ${userId}`);
 
     if (!url) {
         throw new Error("URL is required");
     }
 
-    const shortUrl = await createShortUrlWithUserService(url, userId)
+    const shortUrl = await createShortUrlWithUserService(url, userId , slug)
 
-    res.send(process.env.APP_URL + shortUrl.short_url)
+    res.status(200).json({ shortUrl: process.env.APP_URL + shortUrl.short_url })
 
 })
 
@@ -46,7 +50,13 @@ export const redirectFromShortUrl = tryCatchWrapperForErrorHandeling(async (req,
         return res.status(404).send('Short URL not found');
     }
 
-    return res.redirect(url.full_url);
+    // Add HTTPS  || HTTP  protocol if missing
+    let redirectUrl = url.full_url;
+    if (!redirectUrl.startsWith('http://') && !redirectUrl.startsWith('https://')) {
+        redirectUrl = 'https://' + redirectUrl;
+    }
+
+    return res.redirect(redirectUrl);
 })
 
 export const createCustomUrl = tryCatchWrapperForErrorHandeling(async (req, res) => {
