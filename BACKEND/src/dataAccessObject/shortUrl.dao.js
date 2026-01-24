@@ -35,3 +35,10 @@ export const findUrlByFullUrl = async(fullUrl, userId = null) => {
     }
     return await ShortUrl.findOne(query);
 }
+
+export const deleteUrlByIdAndUserId = async (urlId, userId) => {
+    return await ShortUrl.findOneAndDelete({ 
+        _id: urlId, 
+        user: userId 
+    });
+}

@@ -27,21 +27,15 @@ export const createShortUrlWithUserService = async (url, userId, slug = null) =>
     const generatedShortUrlWithUser = (slug && slug.trim()) ? slug : generateNanoid(7)
     console.log('Generated short URL:', generatedShortUrlWithUser);
     const savedUrl = await shortUrlSaver(generatedShortUrlWithUser, url, userId)
+    console.log('Saved URL:', savedUrl);
     return savedUrl;
 }
 
 
-export const createShortUrlWithOutUserService = async (url, userId, slug = null) => {
-    // Check if custom slug already exists
-    if (slug && slug.trim()) {
-        const existingCustomUrl = await findCustomShortUrl(slug);
-        if (existingCustomUrl) {
-            throw new ConflictError("Custom URL already exists with this slug");
-        }
-    }
+export const createShortUrlWithOutUserService = async (url, userId) => {
 
-    const generatedShortUrlWithoutUser = (slug && slug.trim()) ? slug : generateNanoid(7)
-
+    const generatedShortUrlWithoutUser = generateNanoid(7)
+    console.log('Generated short URL without user:', generatedShortUrlWithoutUser);
     if (!generatedShortUrlWithoutUser) {
         throw new Error("Short url not generated")
     }

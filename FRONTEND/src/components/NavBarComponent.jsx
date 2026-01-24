@@ -1,5 +1,5 @@
-import React from 'react';
-
+import { Link } from '@tanstack/react-router';
+import AuthButton from './AuthButtonComponent';
 export default function NavBar() {
     return (
         <nav className="bg-white shadow-sm border-b border-gray-200">
@@ -12,12 +12,18 @@ export default function NavBar() {
                         </h1>
                     </div>
 
-                    {/* Right side - Login */}
+                    {/* Right side - Login 
                     <div className="flex items-center">
-            <button className="bg-blue-600 text-white hover:bg-blue-700 font-medium text-sm px-4 py-2 rounded-md transition-colors">
-                            Login
+                        <button className="bg-blue-600 text-white hover:bg-blue-700 font-medium text-sm px-4 py-2 rounded-md transition-colors">
+                            <Link
+                                to="/auth"
+                                className="py-2 px-4 bg-blue-500 hover:bg-blue-900 text-white font-medium rounded-md inline-block text-center"
+                            >
+                                Login
+                            </Link>
                         </button>
-                    </div>
+                    </div>*/}
+                    <AuthButton />
                 </div>
             </div>
         </nav>

@@ -4,12 +4,18 @@ export const frontendUserLoginApi = async (email, password) => {
     const { data } = await axiousInstance.post("/api/auth/login", { email, password })
     return data
 }
-export const frontendUserRegisterApi = async (name , email , password) => {
-    const { data } = await axiousInstance.post("/api/auth/register", { name , email , password })
+export const frontendUserRegisterApi = async (name, email, password) => {
+    const { data } = await axiousInstance.post("/api/auth/register", { name, email, password })
     return data
 }
 
 export const frontendUserLogout = async () => {
     const { data } = await axiousInstance.post("/api/auth/logout")
+    return data
+}
+
+
+export const frontendUserGetMe = async () => {
+    const { data } = await axiousInstance.get("/api/auth/me")
     return data
 }

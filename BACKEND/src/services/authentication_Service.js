@@ -28,3 +28,4 @@ export const loginUserService = async (email, password) => {
     const token = await signedJsonWebToken({ id: user._id })
     return { token, user };
 }
+
