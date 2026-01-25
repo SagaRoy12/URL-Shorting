@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import User from "./user.schema.js";
 const shortUrlSchema = new mongoose.Schema({
     full_url: {
         type: String,
