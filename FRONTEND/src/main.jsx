@@ -7,6 +7,9 @@ import { routeTree } from './routing/routeTree'
 import { store } from './reduxStore/store.js'
 import { Provider } from 'react-redux'
 
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.classList.add('dark');
+}
 
 const queryClient = new QueryClient()
 const router = createRouter({

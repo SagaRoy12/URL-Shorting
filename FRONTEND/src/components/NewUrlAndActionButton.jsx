@@ -29,7 +29,7 @@ function NewUrlAndActionButton() {
     return (
         <button
          onClick={handelClick}
-         className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium">
+         className="px-4 py-2 bg-indigo-600 dark:bg-indigo-500 text-white rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors font-medium">
            {handelText()}
         </button>
     );

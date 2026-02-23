@@ -1,21 +1,22 @@
 import { Outlet } from "@tanstack/react-router"
 import UserCreatedCustomUrls from "../components/UserCreatedCustomUrls"
 import NewUrlButton from "../components/NewUrlAndActionButton.jsx"
+import ThemeToggleButton from "../components/ThemeToggleButton.jsx"
 const DashboardPage = () => {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-100">
+        <div className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
             {/* Header */}
-            <div className="bg-white shadow-md border-b border-indigo-100">
+            <div className="bg-white dark:bg-gray-800 shadow-md border-b border-indigo-100 dark:border-gray-700 transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex items-center justify-between">
                         <div>
-                            <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-                            <p className="mt-1 text-sm text-gray-600">Manage your shortened URLs</p>
+                            <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Dashboard</h1>
+                            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your shortened URLs</p>
                         </div>
-                       {/* <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium">
-                            New URL
-                        </button>*/}
-                        <NewUrlButton/>
+                        <div className="flex items-center gap-3">
+                            <ThemeToggleButton />
+                            <NewUrlButton/>
+                        </div>
                     </div>
                     <div className="mt-6">
                         <UserCreatedCustomUrls />
@@ -24,7 +25,7 @@ const DashboardPage = () => {
 
             {/* Main Content */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-colors duration-300">
                     <div className="p-8">
                         {/* URL-based component renders here */}
                         <Outlet />

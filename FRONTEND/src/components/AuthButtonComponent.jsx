@@ -40,7 +40,7 @@ function AuthButton() {
 
     <button
       onClick={handelClick}
-      className="py-2 px-4 bg-blue-600 hover:bg-blue-900 text-white font-medium rounded-md transition duration-150"
+      className="py-2 px-4 bg-blue-600 dark:bg-blue-500 hover:bg-blue-900 dark:hover:bg-blue-600 text-white font-medium rounded-md transition duration-150"
     >
       {handelText()}
     </button>

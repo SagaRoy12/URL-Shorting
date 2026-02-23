@@ -50,14 +50,14 @@ const UserCreatedCustomUrls = () => {
     if (isLoading) {
         return (
             <div className="flex justify-center items-center p-8">
-                <div className="text-gray-600">Loading your URLs...</div>
+                <div className="text-gray-600 dark:text-gray-400">Loading your URLs...</div>
             </div>
         );
     }
 
     if (error) {
         return (
-            <div className="p-4 bg-red-50 text-red-700 rounded-lg">
+            <div className="p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-lg">
                 Failed to fetch URLs
             </div>
         );
@@ -65,37 +65,37 @@ const UserCreatedCustomUrls = () => {
 
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <h1 className="text-2xl font-bold text-gray-800 mb-6">Your Shortened URLs</h1>
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">Your Shortened URLs</h1>
 
             {urls.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                     <p>No URLs created yet.</p>
                     <p className="text-sm mt-2">Create your first shortened URL to see it here!</p>
                 </div>
             ) : (
                 <div className="space-y-4">
                     {urls.map((url) => (
-                        <div key={url._id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                        <div key={url._id} className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4 shadow-sm transition-colors duration-300">
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
                                 {/* Full URL */}
                                 <div className="md:col-span-1">
-                                    <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                                    <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                                         Original URL
                                     </label>
-                                    <p className="text-sm text-gray-800 break-all mt-1">
+                                    <p className="text-sm text-gray-800 dark:text-gray-200 break-all mt-1">
                                         {url.full_url}
                                     </p>
                                 </div>
 
                                 {/* Short URL */}
                                 <div className="md:col-span-1">
-                                    <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                                    <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                                         Short URL
                                     </label>
-                                    <p className="text-sm text-blue-600 break-all mt-1">
+                                    <p className="text-sm text-blue-600 dark:text-blue-400 break-all mt-1">
                                         {`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/${url.short_url}`}
                                     </p>
-                                    <p className="text-xs text-gray-500 mt-1">
+                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                                         Clicks: {url.clicks}
                                     </p>
                                 </div>
@@ -108,8 +108,8 @@ const UserCreatedCustomUrls = () => {
                                             url._id
                                         )}
                                         className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${copiedId === url._id
-                                            ? "bg-green-100 text-green-700"
-                                            : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                                            ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
+                                            : "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/50"
                                             }`}
                                     >
                                         {copiedId === url._id ? "Copied!" : "Copy"}
@@ -118,7 +118,7 @@ const UserCreatedCustomUrls = () => {
                                     <button
                                         onClick={() => handleDelete(url._id)}
                                         disabled={deleteUrlMutation.isPending}
-                                        className="px-3 py-1 text-sm font-medium bg-red-100 text-red-700 hover:bg-red-200 rounded-md transition-colors disabled:opacity-50"
+                                        className="px-3 py-1 text-sm font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 rounded-md transition-colors disabled:opacity-50"
                                     >
                                         {deleteUrlMutation.isPending ? "Deleting..." : "Delete"}
                                     </button>
