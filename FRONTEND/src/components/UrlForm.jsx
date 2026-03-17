@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import UserCreatedCustomUrls from '../components/UserCreatedCustomUrls.jsx'
 
 const UrlForm = () => {
-  
+
   const queryClient = useQueryClient()
   const [url, setUrl] = useState("")
   const [shortUrl, setshortUrl] = useState(null)
@@ -14,10 +14,10 @@ const UrlForm = () => {
   const [customSlug, setCustomSlug] = useState("")
   const handelSubmit = async () => {
 
-    const newShorturl = await getShortUrlFromBackend(url, isAuthenticated ,customSlug)
+    const newShorturl = await getShortUrlFromBackend(url, isAuthenticated, customSlug)
     console.log(newShorturl)
     setshortUrl(newShorturl)
-    
+
     // Invalidate the userUrls query to refetch data
     queryClient.invalidateQueries({ queryKey: ['userUrls'] })
   }
@@ -25,18 +25,24 @@ const UrlForm = () => {
 
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 ">
       <div>
-        <label htmlFor="url" className="block text-sm font-medium text-gray-500">
+        <label htmlFor="url" className="block text-sm font-medium text-Black dark:text-white">
           Enter The URL
         </label>
         <input
           type="url"
           id="url"
-          value={url}    // just for two way binding
+          value={url}
           onInput={(event) => setUrl(event.target.value)}
           placeholder='https://example.com'
-          className="mt-1 block w-full rounded-md border-gray-900 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          className="mt-1 block w-full rounded-lg border border-gray-300 
+             bg-white 
+             text-gray-900 
+             placeholder:text-gray-400
+             shadow-sm focus:outline-none focus:border-indigo-500 
+             focus:ring-2 focus:ring-indigo-200
+             px-4 py-3 text-sm"
         />
       </div>
 
@@ -106,7 +112,7 @@ const UrlForm = () => {
         </div>
       )}
 
-      {isAuthenticated && <UserCreatedCustomUrls />}
+
 
     </div >
 

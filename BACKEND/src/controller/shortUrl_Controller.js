@@ -44,7 +44,7 @@ export const redirectFromShortUrl = tryCatchWrapperForErrorHandeling(async (req,
     console.log('Looking for shortened URL:', shortenedUrl);
 
     const url = await findUrlFromShortUrl(shortenedUrl);
-    console.log('Found URL:', url);
+    // console.log('Found URL:', url);
 
     if (!url) {
         return res.status(404).send('Short URL not found');
@@ -62,7 +62,7 @@ export const redirectFromShortUrl = tryCatchWrapperForErrorHandeling(async (req,
 export const createCustomUrl = tryCatchWrapperForErrorHandeling(async (req, res) => {
     const { url, customSlug } = req.body;
 
-    console.log('createCustomUrl called with:', { url, customSlug, hasUser: !!req.user });
+    // console.log('createCustomUrl called with:', { url, customSlug, hasUser: !!req.user });
 
     if (!url) {
         throw new Error("URL is required");
@@ -79,12 +79,12 @@ export const createCustomUrl = tryCatchWrapperForErrorHandeling(async (req, res)
         });
     }
 
-    console.log('Creating custom URL with userId:', req.user._id, 'customSlug:', customSlug);
+    // console.log('Creating custom URL with userId:', req.user._id, 'customSlug:', customSlug);
 
     // Only authenticated users can create custom URLs
     const result = await createShortUrlWithUserService(url, req.user._id, customSlug);
 
-    console.log('Custom URL created, result:', result);
+    // console.log('Custom URL created, result:', result);
 
     res.status(200).json({ shortUrl: process.env.APP_URL + result.short_url });
 });

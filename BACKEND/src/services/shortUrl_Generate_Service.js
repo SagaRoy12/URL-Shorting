@@ -4,14 +4,14 @@ import { findUrlByFullUrl } from "../dataAccessObject/shortUrl.dao.js"
 import { ConflictError } from "../utility/errorHandeler.js"
 
 export const createShortUrlWithUserService = async (url, userId, slug = null) => {
-    console.log('Service received userId:', userId, 'slug:', slug);
+    // console.log('Service received userId:', userId, 'slug:', slug);
 
     // Only check for existing URL if no custom slug is provided
-    // This allows users to create multiple custom short URLs for the same destination
+   
     if (!slug || !slug.trim()) {
         const existingUrl = await findUrlByFullUrl(url, userId);
         if (existingUrl) {
-            console.log('Returning existing URL:', existingUrl);
+            // console.log('Returning existing URL:', existingUrl);
             return existingUrl; // Return existing short URL
         }
     }

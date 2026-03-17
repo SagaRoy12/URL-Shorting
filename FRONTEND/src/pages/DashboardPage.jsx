@@ -2,7 +2,9 @@ import { Outlet } from "@tanstack/react-router"
 import UserCreatedCustomUrls from "../components/UserCreatedCustomUrls"
 import NewUrlButton from "../components/NewUrlAndActionButton.jsx"
 import ThemeToggleButton from "../components/ThemeToggleButton.jsx"
+import { useSelector } from "react-redux"
 const DashboardPage = () => {
+    const { isAuthenticated } = useSelector((state) => state.auth)
     return (
         <div className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
             {/* Header */}
@@ -19,7 +21,7 @@ const DashboardPage = () => {
                         </div>
                     </div>
                     <div className="mt-6">
-                        <UserCreatedCustomUrls />
+                      
                 </div>
             </div>
 
@@ -27,9 +29,11 @@ const DashboardPage = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-colors duration-300">
                     <div className="p-8">
+                      
                         {/* URL-based component renders here */}
                         <Outlet />
-                        
+
+                         {isAuthenticated && <UserCreatedCustomUrls />}
                     </div>
                 </div>
             </div>

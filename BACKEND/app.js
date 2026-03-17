@@ -13,7 +13,12 @@ import { attachUser } from './src/utility/attachUser.helper.js'
 import user_urlRoute from './src/routes/userUrl_Route.js'
 dotenv.config("./.env")
 app.use(cors({
-    origin: 'http://localhost:5173', // frontend URL
+    origin: [
+        'http://localhost:5173',
+        'http://localhost:5174',
+        //Future Task :- Add production Url⚠️⚠️
+
+    ], // allowed urls
     credentials: true // Allow cookies to be sent
 }))
 
